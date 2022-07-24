@@ -4,7 +4,7 @@ import time
 import os
 
 #Funcao para o menu principal do jogo.
-def menuCampoMinado ():
+def menu_campo_minado ():
     print("(1) Começar jogo")
     print("(2) Recomeçar ultimo jogo")
     print("(3) Os cinco melhores tempos")
@@ -15,7 +15,7 @@ def menuCampoMinado ():
     return opcao
     
 #Funcao para quando for necessario a escolha da dificuldade.
-def menuDificuldade ():
+def menu_dificuldade ():
     print("\n(1) Facil")
     print("(2) Medio")
     print("(3) Voltar")
@@ -26,14 +26,14 @@ def menuDificuldade ():
     
         
 #Funcao para criacao da lista de lista que sera responsavel pelo corpo do jogo, o tabuleiro.
-def criarTabuleiro(quantidadeLinhas):
+def criar_tabuleiro(quantidadeLinhas):
     linhaCampoMinado = ["*"] * quantidadeLinhas
     
     return [linhaCampoMinado[:] for _ in range(quantidadeLinhas)] 
         
 
 #Funcao para mostrar o tabuleiro sem os colchetes da lista.
-def mostrarTabuleiro (tabuleiroCampoMinado):
+def mostrar_tabuleiro (tabuleiroCampoMinado):
     print('\t', end = '')
     
     for elemento in range(1,len(tabuleiroCampoMinado[0])+1):
@@ -51,7 +51,7 @@ def mostrarTabuleiro (tabuleiroCampoMinado):
     
 
 #Funcao para criar as bombas.
-def posicoesBombasSorteadas (quantidadesBombas, tabuleiroCampoMinado):
+def posicoes_bombas_sorteadas (quantidadesBombas, tabuleiroCampoMinado):
     posicoesBombas = []
     
     #Sorteando as posicoes das bombas.
@@ -66,7 +66,7 @@ def posicoesBombasSorteadas (quantidadesBombas, tabuleiroCampoMinado):
 
 
 #Funcao que pede a linha e a coluna para o usuario e faz validacao dos inputs recebidos.
-def posicaoEscolhida (tabuleiroCampoMinado):
+def posicao_escolhida (tabuleiroCampoMinado):
     while True:
             try:
                 linha = int(input("Digite o numero da linha:"))
@@ -98,7 +98,7 @@ def posicaoEscolhida (tabuleiroCampoMinado):
 
 
 #Funcao que guarda todas as informacoes necessarias, dentro de um arquivo, para recomecar o jogo
-def salvarJogo (tabuleiroCampoMinado, posicoesBombas, posicoesEscolhidas, tempoAnterior, arquivoJogoSalvo):
+def salvar_jogo (tabuleiroCampoMinado, posicoesBombas, posicoesEscolhidas, tempoAnterior, arquivoJogoSalvo):
     ultimoJogo = open(arquivoJogoSalvo, "w")
     ultimoJogo.write("Tabuleiro;" +str(tabuleiroCampoMinado) + ";\n")
     ultimoJogo.write("Bombas;" + str(posicoesBombas) + ";\n")
@@ -108,7 +108,7 @@ def salvarJogo (tabuleiroCampoMinado, posicoesBombas, posicoesEscolhidas, tempoA
    
         
 #Funcao que guarda as informacoes do arquivo salvo em uma lista        
-def tabuleiroSalvo (arquivoUltimoJogo):
+def tabuleiro_salvo (arquivoUltimoJogo):
     ultimoJogoSalvo = open(arquivoUltimoJogo, "r")
     tabuleiroSalvo = []
     posicoesBombas = []
@@ -133,7 +133,7 @@ def tabuleiroSalvo (arquivoUltimoJogo):
     return tabuleiroSalvo, posicoesBombas, posicoesEscolhidas, tempoAnterior
 
 #Funcao para verificar se ha bombas ao redor
-def calculoDistancia(primeiroPosicao, segundaPosicao):
+def calculo_distancia (primeiroPosicao, segundaPosicao):
     x = primeiroPosicao[0] - segundaPosicao[0]
     y = primeiroPosicao[1] - segundaPosicao[1]
     
@@ -141,7 +141,7 @@ def calculoDistancia(primeiroPosicao, segundaPosicao):
 
 
 #Funcao que possui a logica do Campo Minado
-def verificarPosicaoEscolhida (posicoesBombas, posicoesEscolhidas, tabuleiroCampoMinado, tempoAnterior, arquivoTemposVitoria, arquivoJogoSalvo):
+def verificar_posicao_escolhida (posicoesBombas, posicoesEscolhidas, tabuleiroCampoMinado, tempoAnterior, arquivoTemposVitoria, arquivoJogoSalvo):
     print ("Aperte CTRL+C, a qualquer momento, para encerrar o jogo!")
     listaPosicoesEscolhidas = posicoesEscolhidas
     tempoInicial = time.time()
@@ -149,8 +149,8 @@ def verificarPosicaoEscolhida (posicoesBombas, posicoesEscolhidas, tabuleiroCamp
     while True:
         try:
             print (posicoesBombas)
-            mostrarTabuleiro(tabuleiroCampoMinado)
-            linha, coluna = posicaoEscolhida(tabuleiroCampoMinado)
+            mostrar_tabuleiro(tabuleiroCampoMinado)
+            linha, coluna = posicao_escolhida(tabuleiroCampoMinado)
             contadorBombasAoRedor = 0
             listaPosicaoEscolhida = [linha, coluna]
             
@@ -168,13 +168,13 @@ def verificarPosicaoEscolhida (posicoesBombas, posicoesEscolhidas, tabuleiroCamp
                 os.system("cls")
                 for posicaoBomba in posicoesBombas: 
                     tabuleiroCampoMinado[posicaoBomba[0] - 1][posicaoBomba[1] - 1] = "X"
-                mostrarTabuleiro(tabuleiroCampoMinado)
+                mostrar_tabuleiro(tabuleiroCampoMinado)
                 print ("Voce perdeu!")
                 break
             
             #Verificando quantas bombas ha ao redor da posicao escolhida
             for bomba in posicoesBombas:
-                x, y = calculoDistancia(bomba, listaPosicaoEscolhida)
+                x, y = calculo_distancia(bomba, listaPosicaoEscolhida)
                 if  x <= 1 and  y <= 1:
                     contadorBombasAoRedor += 1 
                         
@@ -190,7 +190,7 @@ def verificarPosicaoEscolhida (posicoesBombas, posicoesEscolhidas, tabuleiroCamp
                 tempos.write(str(round(tempoVitoria, 2)) + ",") 
                 tempos.close()
                 
-                mostrarTabuleiro(tabuleiroCampoMinado)
+                mostrar_tabuleiro(tabuleiroCampoMinado)
                 print (round(tempoVitoria, 2))
                 print("Parabens, voce ganhou!")
                 break
@@ -200,12 +200,12 @@ def verificarPosicaoEscolhida (posicoesBombas, posicoesEscolhidas, tabuleiroCamp
         except KeyboardInterrupt:
             tempoFinal = time.time()
             tempoAnterior =  (tempoFinal  - tempoInicial) + tempoAnterior
-            salvarJogo (tabuleiroCampoMinado, posicoesBombas, listaPosicoesEscolhidas, tempoAnterior, arquivoJogoSalvo)
+            salvar_jogo (tabuleiroCampoMinado, posicoesBombas, listaPosicoesEscolhidas, tempoAnterior, arquivoJogoSalvo)
             break
         
             
 #Funcao que seleciona os cinco melhores tempos            
-def cincoMelhoresTempos (arquivoTemposVitoria):
+def cinco_melhores_tempos (arquivoTemposVitoria):
     temposVitoria = open(arquivoTemposVitoria, "r")
     cincoMelhoresTempos = []
     
@@ -226,7 +226,7 @@ def cincoMelhoresTempos (arquivoTemposVitoria):
     
 
 #Funcao principal que recebe as demais funcoes para executa-las
-def campoMinado():
+def campo_minado ():
     print("-----Trabalho de Comp1-----")
     print("-----Matheus Delduque-----")
     print("-----Campo Minado-----")
@@ -241,27 +241,27 @@ def campoMinado():
     tempoAnterior = 0
     
     while True:
-        opcao1 = menuCampoMinado()
+        opcao1 = menu_campo_minado()
         os.system("cls")
         
         if opcao1 == "1":
             while True:
-                opcao2 = menuDificuldade()
+                opcao2 = menu_dificuldade()
                 os.system("cls")
             
                 if opcao2 == "1":
                     listaPosicoesEscolhidas4x4 = []
                     tempoAnterior = 0
-                    tabuleiroCampoMinado4x4 = criarTabuleiro(4)
-                    posicoesBombasSorteadas4x4 = (posicoesBombasSorteadas(6,tabuleiroCampoMinado4x4))
-                    verificarPosicaoEscolhida(posicoesBombasSorteadas4x4, listaPosicoesEscolhidas4x4, tabuleiroCampoMinado4x4, tempoAnterior, "temposvitoria4bombas.txt", "ultimojogo4x4.txt")                    
+                    tabuleiroCampoMinado4x4 = criar_tabuleiro(4)
+                    posicoesBombasSorteadas4x4 = (posicoes_bombas_sorteadas(6,tabuleiroCampoMinado4x4))
+                    verificar_posicao_escolhida(posicoesBombasSorteadas4x4, listaPosicoesEscolhidas4x4, tabuleiroCampoMinado4x4, tempoAnterior, "temposvitoria4bombas.txt", "ultimojogo4x4.txt")                    
             
                 elif opcao2 == "2": 
                     listaPosicoesEscolhidas6x6 = []
                     tempoAnterior = 0
-                    tabuleiroCampoMinado6x6 = criarTabuleiro(6)
-                    posicoesBombasSorteadas6x6 = (posicoesBombasSorteadas(10,tabuleiroCampoMinado6x6))
-                    verificarPosicaoEscolhida(posicoesBombasSorteadas6x6, listaPosicoesEscolhidas6x6, tabuleiroCampoMinado6x6, tempoAnterior, "temposvitoria6bombas.txt", "ultimojogo6x6.txt")    
+                    tabuleiroCampoMinado6x6 = criar_tabuleiro(6)
+                    posicoesBombasSorteadas6x6 = (posicoes_bombas_sorteadas(10,tabuleiroCampoMinado6x6))
+                    verificar_posicao_escolhida(posicoesBombasSorteadas6x6, listaPosicoesEscolhidas6x6, tabuleiroCampoMinado6x6, tempoAnterior, "temposvitoria6bombas.txt", "ultimojogo6x6.txt")    
             
                 elif opcao2 == "3":
                     break
@@ -271,17 +271,17 @@ def campoMinado():
                     
         elif opcao1 == "2":
             while True:
-                opcao3 = menuDificuldade()
+                opcao3 = menu_dificuldade()
                 os.system("cls")
 
                 if opcao3 == "1":
-                   tabuleiroCampoMinado4x4, posicoesBombasSorteadas4x4, listaPosicoesEscolhidas4x4, tempoAnterior = tabuleiroSalvo("ultimojogo4x4.txt")    
-                   verificarPosicaoEscolhida(posicoesBombasSorteadas4x4, listaPosicoesEscolhidas4x4, tabuleiroCampoMinado4x4, tempoAnterior,  "temposvitoria4bombas.txt", "ultimojogo4x4.txt")
+                   tabuleiroCampoMinado4x4, posicoesBombasSorteadas4x4, listaPosicoesEscolhidas4x4, tempoAnterior = tabuleiro_salvo("ultimojogo4x4.txt")    
+                   verificar_posicao_escolhida(posicoesBombasSorteadas4x4, listaPosicoesEscolhidas4x4, tabuleiroCampoMinado4x4, tempoAnterior,  "temposvitoria4bombas.txt", "ultimojogo4x4.txt")
                    
                 
                 elif opcao3 == "2":
-                    tabuleiroCampoMinado6x6, posicoesBombasSorteadas6x6, listaPosicoesEscolhidas6x6, tempoAnterior = tabuleiroSalvo("ultimojogo6x6.txt")
-                    verificarPosicaoEscolhida(posicoesBombasSorteadas6x6, listaPosicoesEscolhidas6x6, tabuleiroCampoMinado6x6, tempoAnterior, "temposvitoria6bombas.txt", "ultimojogo6x6.txt")
+                    tabuleiroCampoMinado6x6, posicoesBombasSorteadas6x6, listaPosicoesEscolhidas6x6, tempoAnterior = tabuleiro_salvo("ultimojogo6x6.txt")
+                    verificar_posicao_escolhida(posicoesBombasSorteadas6x6, listaPosicoesEscolhidas6x6, tabuleiroCampoMinado6x6, tempoAnterior, "temposvitoria6bombas.txt", "ultimojogo6x6.txt")
                 
                 elif opcao3 == "3":
                     break
@@ -291,14 +291,14 @@ def campoMinado():
                 
         elif opcao1 == "3":
             while True:
-                opcao4 = menuDificuldade()
+                opcao4 = menu_dificuldade()
                 os.system("cls")
 
                 if opcao4 == "1":
-                    cincoMelhoresTempos("temposvitoria4bombas.txt")
+                    cinco_melhores_tempos("temposvitoria4bombas.txt")
                 
                 elif opcao4 == "2":
-                    cincoMelhoresTempos("temposvitoria6bombas.txt")
+                    cinco_melhores_tempos("temposvitoria6bombas.txt")
                     
                 elif opcao4 == "3":
                     break
@@ -314,4 +314,4 @@ def campoMinado():
 
 
 if __name__ == "__main__":
-    campoMinado()
+    campo_minado()

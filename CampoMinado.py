@@ -229,31 +229,11 @@ def cincoMelhoresTempos (arquivoTemposVitoria):
     cincoMelhoresTempos = cincoMelhoresTempos[:5]
     print("Melhores tempos:")
 
-    if len(cincoMelhoresTempos) == 1:
-        print("Primeiro: " + str(cincoMelhoresTempos[0]))
-        
-    elif len(cincoMelhoresTempos) == 2:
-        print("Primeiro: " + str(cincoMelhoresTempos[0]))
-        print("Segundo: " + str(cincoMelhoresTempos[1]))
-        
-    elif len(cincoMelhoresTempos) == 3:
-        print("Primeiro: " + str(cincoMelhoresTempos[0]))
-        print("Segundo: " + str(cincoMelhoresTempos[1]))
-        print("Terceiro: " + str(cincoMelhoresTempos[2]))
-        
-    elif len(cincoMelhoresTempos) == 4:
-        print("Primeiro: " + str(cincoMelhoresTempos[0]))   
-        print("Segundo: " + str(cincoMelhoresTempos[1]))
-        print("Terceiro: " + str(cincoMelhoresTempos[2]))
-        print("Quarto: " + str(cincoMelhoresTempos[3]))
-        
-    elif len(cincoMelhoresTempos) == 5:
-        print("Primeiro: " + str(cincoMelhoresTempos[0]))  
-        print("Segundo: " + str(cincoMelhoresTempos[1]))
-        print("Terceiro: " + str(cincoMelhoresTempos[2]))
-        print("Quarto: " + str(cincoMelhoresTempos[3]))
-        print("Quinto: " + str(cincoMelhoresTempos[4]))
-
+    posicoes = {1: "Primeiro: ", 2: "Segundo: ", 3: "Terceiro: ", 4:"Quarto: ", 5:"Quinto: "}
+    
+    for colocacao in range(len(cincoMelhoresTempos)):
+        print(posicoes[colocacao + 1] + str(cincoMelhoresTempos[colocacao]))
+    
 
 #Funcao principal que recebe as demais funcoes para executa-las
 def campoMinado():

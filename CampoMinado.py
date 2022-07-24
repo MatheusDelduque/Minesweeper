@@ -27,10 +27,8 @@ def menuDificuldade ():
 #Funcao para criacao da lista de lista que sera responsavel pelo corpo do jogo, o tabuleiro.
 def criarTabuleiro(quantidadeLinhas):
     linhaCampoMinado = ["*"] * quantidadeLinhas
-    tabuleiroCampoMinado = [] 
     
-    for linhas in range(quantidadeLinhas):
-        tabuleiroCampoMinado.append(linhaCampoMinado[:])
+    tabuleiroCampoMinado = [linhaCampoMinado[:] for _ in range(quantidadeLinhas)] 
         
     return tabuleiroCampoMinado
 
@@ -158,7 +156,6 @@ def verificarPosicaoEscolhida (posicoesBombas, posicoesEscolhidas, tabuleiroCamp
             else:
                 os.system("cls")
                 listaPosicoesEscolhidas.append(listaPosicaoEscolhida)
-            
             
             #Verificando se o jogador perdeu
             if listaPosicaoEscolhida in posicoesBombas :

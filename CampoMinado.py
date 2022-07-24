@@ -1,3 +1,4 @@
+from contextlib import ContextDecorator
 import random
 import time
 import os
@@ -28,10 +29,8 @@ def menuDificuldade ():
 def criarTabuleiro(quantidadeLinhas):
     linhaCampoMinado = ["*"] * quantidadeLinhas
     
-    tabuleiroCampoMinado = [linhaCampoMinado[:] for _ in range(quantidadeLinhas)] 
+    return [linhaCampoMinado[:] for _ in range(quantidadeLinhas)] 
         
-    return tabuleiroCampoMinado
-
 
 #Funcao para mostrar o tabuleiro sem os colchetes da lista.
 def mostrarTabuleiro (tabuleiroCampoMinado):
@@ -134,6 +133,13 @@ def tabuleiroSalvo (arquivoUltimoJogo):
     return tabuleiroSalvo, posicoesBombas, posicoesEscolhidas, tempoAnterior
 
 
+def calculoDistancia(primeiroPosicao, segundaPosicao):
+    x = primeiroPosicao[0] - segundaPosicao[0]
+    y = primeiroPosicao[1] - segundaPosicao[1]
+    
+    return abs(x), abs(y)
+
+
 #Funcao que possui a logica do Campo Minado
 def verificarPosicaoEscolhida (posicoesBombas, posicoesEscolhidas, tabuleiroCampoMinado, tempoAnterior, arquivoTemposVitoria, arquivoJogoSalvo):
     print ("Aperte CTRL+C, a qualquer momento, para encerrar o jogo!")
@@ -142,7 +148,7 @@ def verificarPosicaoEscolhida (posicoesBombas, posicoesEscolhidas, tabuleiroCamp
     
     while True:
         try:
-            #print (posicoesBombas)
+            print (posicoesBombas)
             mostrarTabuleiro(tabuleiroCampoMinado)
             linha, coluna = posicaoEscolhida(tabuleiroCampoMinado)
             contadorBombasAoRedor = 0
@@ -168,22 +174,9 @@ def verificarPosicaoEscolhida (posicoesBombas, posicoesEscolhidas, tabuleiroCamp
             
             #Verificando quantas bombas ha ao redor da posicao escolhida
             for bomba in posicoesBombas:
-                if (linha + 1) == bomba[0] or (linha - 1) == bomba[0]:
-                    if bomba[1] == coluna:
-                        contadorBombasAoRedor += 1
-                        
-                    if bomba[1] == coluna - 1:
-                        contadorBombasAoRedor += 1
-                    
-                    if bomba[1] == coluna + 1:
-                        contadorBombasAoRedor += 1
-                    
-                elif linha == bomba[0]:
-                    if bomba[1] == coluna - 1:
-                        contadorBombasAoRedor += 1
-                    
-                    if bomba[1] == coluna + 1:
-                        contadorBombasAoRedor += 1        
+                x, y = calculoDistancia(bomba, listaPosicaoEscolhida)
+                if  x <= 1 and  y <= 1:
+                    contadorBombasAoRedor += 1 
                         
             tabuleiroCampoMinado[linha - 1][coluna - 1] = contadorBombasAoRedor
 

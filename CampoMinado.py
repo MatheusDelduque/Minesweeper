@@ -132,7 +132,7 @@ def tabuleiroSalvo (arquivoUltimoJogo):
                 
     return tabuleiroSalvo, posicoesBombas, posicoesEscolhidas, tempoAnterior
 
-
+#Funcao para verificar se ha bombas ao redor
 def calculoDistancia(primeiroPosicao, segundaPosicao):
     x = primeiroPosicao[0] - segundaPosicao[0]
     y = primeiroPosicao[1] - segundaPosicao[1]
